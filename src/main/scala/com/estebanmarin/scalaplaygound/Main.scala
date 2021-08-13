@@ -6,53 +6,32 @@ object Main {
     println("─" * 100)
 
     {
+      def factorial(n: Int) = {
 
-      def method1: String = {
-
-        var currentIteration = 1
+        var iterations = 0
 
         @scala.annotation.tailrec
-        def loop: String =
-          if (currentIteration % 5 != 0) {
-            println(currentIteration)
+        def loop(n: Int, acc: Int): Int = {
 
-            currentIteration += 1
-
-            loop
-          }
+          iterations += 1
+          if (n == 0)
+            acc
           else
-            "done"
+            loop(
+              n = n - 1,
+              acc = acc * n,
+            )
 
-        loop
-      }
-
-      def method2: String = {
-        @scala.annotation.tailrec
-        def loop(currentIteration: Int): String =
-          if (currentIteration % 5 != 0) {
-            println(currentIteration)
-
-            loop(currentIteration + 1)
-          }
-          else
-            "done"
-
-        loop(1)
-      }
-
-      def method3 = {
-
-        var currentIteration = 1
-
-        while (currentIteration % 5 != 0) {
-          println(currentIteration)
-
-          currentIteration += 1
         }
-        "done"
+
+        val result = loop(n, 1)
+        println(s"iterations: $iterations \n")
+        result
       }
 
-      println(method3)
+      println(factorial(5))
+      println(factorial(99999))
+
     }
 
     println("─" * 100)
