@@ -11,6 +11,7 @@ object Main {
 
         var currentIteration = 1
 
+        @scala.annotation.tailrec
         def loop: String =
           if (currentIteration % 5 != 0) {
             println(currentIteration)
@@ -26,6 +27,7 @@ object Main {
       }
 
       def method2: String = {
+        @scala.annotation.tailrec
         def loop(currentIteration: Int): String =
           if (currentIteration % 5 != 0) {
             println(currentIteration)
