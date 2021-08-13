@@ -7,7 +7,7 @@ object Main {
 
     {
 
-      def method: String = {
+      def method1: String = {
 
         var currentIteration = 1
 
@@ -25,7 +25,32 @@ object Main {
         loop
       }
 
-      println(method)
+      def method2: String = {
+        def loop(currentIteration: Int): String =
+          if (currentIteration % 5 != 0) {
+            println(currentIteration)
+
+            loop(currentIteration + 1)
+          }
+          else
+            "done"
+
+        loop(1)
+      }
+
+      def method3 = {
+
+        var currentIteration = 1
+
+        while (currentIteration % 5 != 0) {
+          println(currentIteration)
+
+          currentIteration += 1
+        }
+        "done"
+      }
+
+      println(method3)
     }
 
     println("─" * 100)
