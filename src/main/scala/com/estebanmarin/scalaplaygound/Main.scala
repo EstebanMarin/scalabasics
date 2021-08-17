@@ -3,61 +3,32 @@ package scalaplaygound
 
 object Main {
   def main(args: Array[String]): Unit = {
-    println("─" * 100)
+    println("─" * 50)
 
-    {
-      def factorial(n: Int) = {
+    def signedBites(n: Long): Int =
+      unsignedBits(n) + 1
 
-        var iterations = 0
+    def unsignedBits(n: Long): Int =
+      toBinary(n).size
 
-        @scala.annotation.tailrec
-        def loop(n: Int, acc: Int): Int = {
+    def toBinary(x: Long): String = {
 
-          iterations += 1
-          if (n == 0)
-            acc
-          else
-            loop(
-              n = n - 1,
-              acc = acc * n,
-            )
+      @scala.annotation.tailrec
+      def loop(x: Long, acc: String): String =
+        if (x <= 1)
+          s"${(x % 2).toString()}${acc}"
+        else
+          loop(
+            x = x / 2,
+            acc = s"${(x % 2).toString()}${acc}",
+          )
 
-        }
-
-        val result = loop(n, 1)
-        println(s"iterations: $iterations \n")
-        result
-      }
-
-      def fibonacci(n: Int): Int = {
-        var iterations = 0
-
-        @scala.annotation.tailrec
-        def loop(
-            n: Int,
-            acc1: Int,
-            acc2: Int,
-          ): Int = {
-          iterations += 1
-          if (n == 0)
-            acc1
-          else if (n == 1)
-            acc2
-          else
-            loop(n = n - 1, acc1 = acc2, acc2 = acc2 + acc1)
-        }
-        val result = loop(n, 0, 1)
-        println(s"iterations: $iterations \n")
-        result
-      }
-
-      // println(factorial(5))
-      // println(factorial(99999))
-
-      println(s" 3 => ${fibonacci(50)}")
-
+      loop(x, "")
     }
 
-    println("─" * 100)
+    println(toBinary(73))
+    println(unsignedBits(73))
+
+    println("─" * 50)
   }
 }
