@@ -5,9 +5,14 @@ object Main {
   def main(args: Array[String]): Unit = {
     println("─" * 50)
 
-    val i: (Int, Int) => Boolean = _ == _
+    {
+      var cycle = 360
 
-    println(i(10, 11))
+      350 to 370 foreach { i =>
+        println(i % cycle)
+      }
+    }
+
     println("─" * 50)
   }
 }
