@@ -29,9 +29,10 @@ object Main {
           balance = balance + amount
           balance
         }
-        else
+        else {
           balance = amount + balance
-      balance
+          balance
+        }
 
       val dispatch: Symbol => (Int => Int) = operation =>
         operation match {
@@ -47,5 +48,6 @@ object Main {
     println(bankAccount1(Symbol("withdraw"))(10))
     println(bankAccount1(Symbol("withdraw"))(50))
     println(bankAccount1(Symbol("deposit"))(50))
+    println(bankAccount1(Symbol("bla"))(50))
   }
 }
