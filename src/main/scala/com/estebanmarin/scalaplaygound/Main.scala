@@ -13,10 +13,12 @@ object Main {
 
   def code(args: Array[String]): Unit = {
 
-    def openTerm(freeVariable: Int): Int => Int =
-      boundVariable => freeVariable + boundVariable
+    // Higher order because produces another function
+    // as it result but put type to trhe bound variable
+    def closeTerm(freeVariable: Int)(boundVariable: Int): Int =
+      freeVariable + boundVariable
 
-    println(openTerm(freeVariable = 3)(0))
+    println(closeTerm(freeVariable = 3)(boundVariable = 3))
 
   }
 }
