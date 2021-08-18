@@ -13,50 +13,25 @@ object Main {
 
   def code(args: Array[String]): Unit = {
 
-    def show(
-        fName: String,
-        f: Int => Int,
-        arg: Int,
-      ): String =
-      s"""|Function: ${fName}\tArgument: ${arg}\tResult: ${f(arg)}""".stripMargin
+    var freeVariable: Int = 1337
 
-    def showRange(
-        fName: String,
-        arguments: Range,
-        f: Int => Int,
-      ): Unit =
-      arguments foreach { argument =>
-        println(
-          show(fName, f, argument)
-        )
-      }
+    def openTerm(boundVariable: Int): Int = freeVariable + boundVariable
+    def closeTerm(boundVariable: Int): Int = boundVariable
 
-    def factorial(n: Int): Int = {
-      @scala.annotation.tailrec
-      def loop(acc: Int, n: Int): Int =
-        if (n <= 1)
-          acc
-        else
-          loop(n * acc, n - 1)
-      loop(1, n)
-    }
+    // val addToX: Int => Int = y => x + y
 
-    def fibonacci(n: Int): Int = {
-      @scala.annotation.tailrec
-      def loop(
-          n: Int,
-          a: Int,
-          b: Int,
-        ): Int = n match {
-        case 0 => a
-        case _ => loop(n - 1, b, a + b)
-      }
-      loop(n, 0, 1)
-    }
+    freeVariable = 7
+    println(openTerm(boundVariable = 0))
+    println(closeTerm(boundVariable = 1))
 
-    showRange(fName = " + 5", 1 to 10, f = _ + 5)
-    showRange(fName = "Factorial", 1 to 10, f = factorial)
-    showRange(fName = "Fibonacci", 1 to 10, f = fibonacci)
+    freeVariable = 10
+    println(openTerm(boundVariable = 1))
+
+    freeVariable = 20
+    println(openTerm(boundVariable = 2))
+
+    freeVariable = 30
+    println(openTerm(boundVariable = 3))
 
   }
 }
