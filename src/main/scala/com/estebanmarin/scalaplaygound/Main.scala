@@ -13,72 +13,38 @@ object Main {
 
   def code(args: Array[String]): Unit = {
 
-    trait BankAccount {
-      def withdraw(amount: Int): Unit
-      def deposit(amount: Int): Unit
-      def getBalance: Int
+    trait DataStructure {
+      val length: Int
+      def +(second: Word): Word
     }
 
-    class Account(initialBalance: Int) extends BankAccount {
-      private[this] var _balance: Int = initialBalance
-
-      def withdraw(amount: Int): Unit =
-        if (this._balance >= amount) {
-          this._balance = this._balance - amount
-        }
-        else
-          sys.error(s"Insuficient funds")
-
-      def deposit(amount: Int): Unit =
-        if (this._balance >= 1) {
-          this._balance = this._balance + amount
-        }
-        else {
-          this._balance = amount + this._balance
-        }
-
-      def getBalance: Int = this._balance
-
+    final case class Word(string: String) extends DataStructure {
+      val length = string.length
+      def +(second: Word): Word =
+        new Word(s"${this.string}${second.string}")
     }
 
-    object Account {
+    final case class Person(
+        name: String,
+        age: Int,
+        phone: String,
+        email: String,
+      )
 
-      def makeTransfer(
-          from: BankAccount,
-          amount: Int,
-          to: BankAccount,
-        ): Unit = {
+    val result: Word = Word("Hello ") + Word("World")
 
-        def showBothAccounts(): Unit = {
-          println(s"from: ${from.getBalance}")
-          println(s"to: ${to.getBalance}")
-        }
+    println(result)
+    println(result.string)
 
-        showBothAccounts()
-        from.withdraw(amount = amount)
-        to.deposit(amount = amount)
+    val bob: Person =
+      Person(
+        name = "bob",
+        age = 35,
+        phone = "121564",
+        email = "bob@bob.com",
+      )
 
-        println()
-        showBothAccounts()
-      }
-    }
-
-    val bankAccount1 = new Account(initialBalance = 200)
-    val bankAccount2 = new Account(initialBalance = 600)
-
-    println(bankAccount1.getBalance)
-    bankAccount1.withdraw(amount = 50)
-    println(bankAccount1.getBalance)
-
-    println(bankAccount1.getBalance)
-    bankAccount1.withdraw(amount = 50)
-    println(bankAccount1.getBalance)
-
-    println(bankAccount1.getBalance)
-    bankAccount1.deposit(amount = 250)
-    println(bankAccount1.getBalance)
-
-    Account.makeTransfer(from = bankAccount1, amount = 50, to = bankAccount2)
+    println(bob)
 
   }
 }
