@@ -1,50 +1,31 @@
 package com.estebanmarin
 package scalaplaygound
 
-object Main {
-  def main(args: Array[String]): Unit = {
-    println("─" * 50)
+import Constants._
+import scala.concurrent.duration._
 
-    code(args)
+object TickUntilEnterPressed {
+  def main(args: Array[String]): Unit =
+    Scala.tickUntilEnterPressed(Interval) {
 
-    println("─" * 50)
-
-  }
-
-  def code(args: Array[String]): Unit = {
-
-    trait DataStructure {
-      val length: Int
-      def +(second: Word): Word
+      Terminal.clearCanvas()
+      Terminal.goUp(LineToGoUp)
+      TwoDimensionalTime.showCurrent(TimePattern)
     }
-
-    final case class Word(string: String) extends DataStructure {
-      val length = string.length
-      def +(second: Word): Word =
-        new Word(s"${this.string}${second.string}")
+}
+object TickForFewSeconds {
+  def main(args: Array[String]): Unit =
+    Scala.loop(times = FewSeconds) {
+      Terminal.clearCanvas()
+      Terminal.goUp(LineToGoUp)
+      TwoDimensionalTime.showCurrent(TimePattern)
+      Scala.wait(Interval)
     }
+}
 
-    final case class Person(
-        name: String,
-        age: Int,
-        phone: String,
-        email: String,
-      )
-
-    val result: Word = Word("Hello ") + Word("World")
-
-    println(result)
-    println(result.string)
-
-    val bob: Person =
-      Person(
-        name = "bob",
-        age = 35,
-        phone = "121564",
-        email = "bob@bob.com",
-      )
-
-    println(bob)
-
-  }
+object Constants {
+  val FewSeconds: Int = 30
+  val TimePattern: String = "HH:mm:ss"
+  val Interval: FiniteDuration = 1.second
+  val LineToGoUp: Int = Int.MaxValue
 }
