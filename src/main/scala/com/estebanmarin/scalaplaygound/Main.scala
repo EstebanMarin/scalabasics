@@ -13,41 +13,70 @@ object Main {
 
   def code(args: Array[String]): Unit = {
 
-    def bankAccount(initialBalance: Int): Symbol => Int => Int = {
+    trait BankAccount {
+      def withdraw: Int => Unit
+      def deposit: Int => Unit
+      def getBalance: () => Int
+    }
+
+    class Account(initialBalance: Int) extends BankAccount {
       var balance: Int = initialBalance
 
-      val withdraw: Int => Int = amount =>
+      def withdraw: Int => Unit = amount =>
         if (balance >= amount) {
           balance = balance - amount
-          balance
         }
         else
           sys.error(s"Insuficient funds")
 
-      val deposit: Int => Int = amount =>
+      def deposit: Int => Unit = amount =>
         if (balance >= 1) {
           balance = balance + amount
-          balance
         }
         else {
           balance = amount + balance
-          balance
         }
 
-      val dispatch: Symbol => (Int => Int) = operation =>
-        operation match {
-          case Symbol("withdraw") => withdraw
-          case Symbol("deposit")  => deposit
-          case _                  => x => x
-        }
-      dispatch
+      def getBalance: () => Int = () => balance
+
     }
 
-    val bankAccount1 = bankAccount(initialBalance = 100)
+    val bankAccount1 = new Account(initialBalance = 200)
 
-    println(bankAccount1(Symbol("withdraw"))(10))
-    println(bankAccount1(Symbol("withdraw"))(50))
-    println(bankAccount1(Symbol("deposit"))(50))
-    println(bankAccount1(Symbol("bla"))(50))
+    println(bankAccount1.getBalance())
+    bankAccount1.withdraw(50)
+    println(bankAccount1.getBalance())
+
+    println(bankAccount1.getBalance())
+    bankAccount1.withdraw(50)
+    println(bankAccount1.getBalance())
+
+    println(bankAccount1.getBalance())
+    bankAccount1.deposit(250)
+    println(bankAccount1.getBalance())
+
+    def makeTransfer(
+        from: BankAccount,
+        amount: Int,
+        to: BankAccount,
+      ): Unit = {
+
+      def showBothAccounts(): Unit = {
+        println(s"from: ${from.getBalance()}")
+        println(s"to: ${to.getBalance()}")
+      }
+
+      showBothAccounts()
+      from.withdraw(amount)
+      to.deposit(amount)
+
+      println()
+      showBothAccounts()
+    }
+
+    val bankAccount2 = new Account(initialBalance = 600)
+
+    makeTransfer(from = bankAccount1, amount = 50, to = bankAccount2)
+
   }
 }
