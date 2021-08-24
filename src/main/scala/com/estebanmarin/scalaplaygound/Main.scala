@@ -10,17 +10,13 @@ object main {
 
   def code(args: Array[String]): Unit = {
 
-    // trait Impedance {
-    //   val wattsPerSecond: Int
-    //   def turnOn: () => Unit
-    //   def turnOff: () => Unit
-    // }
+    trait Device {
+      def wattsPerSecond: Int
+      def turnDeviceOn(): Unit
+      def turnDeviceOff(): Unit
+    }
 
-    class EnergyMeter(
-        wattsPerSecond: Int,
-        turnDeviceOn: () => Unit,
-        turnDeviceOff: () => Unit,
-      ) {
+    class EnergyMeter(device: Device) {
 
       private[this] var turnedOnAtMillis: Long = 0
       private[this] var _wattsConsumedInTotal: Double = 0
@@ -31,13 +27,13 @@ object main {
         _wattsConsumedInTotal = newValue
 
       def startMeasuring(): Unit = {
-        turnDeviceOn()
+        device.turnDeviceOn()
         turnedOnAtMillis = System.currentTimeMillis()
       }
 
       def stopMeasuring(): Unit = {
 
-        turnDeviceOff()
+        device.turnDeviceOff()
 
         val durationInMillis = System.currentTimeMillis() - turnedOnAtMillis
         val durationInSeconds = durationInMillis.toDouble / 1000
@@ -50,26 +46,22 @@ object main {
 
     }
 
-    object SomeComponent {
+    object EnergyMeter {
 
-      def staticDispatch(device: Any): EnergyMeter =
+      def apply(device: Any): EnergyMeter =
         device match {
           case lightBulb: LightBulb =>
-            val lightBulb = device.asInstanceOf[LightBulb]
             new EnergyMeter(
               wattsPerSecond = lightBulb.wattsPerSecond,
               turnDeviceOn = () => lightBulb.turnOn(),
               turnDeviceOff = () => lightBulb.turnOff(),
             )
-
           case tv: TV =>
-            val tv = device.asInstanceOf[TV]
             new EnergyMeter(
               wattsPerSecond = tv.wattsPerSecond,
               turnDeviceOn = () => tv.turnOn(),
               turnDeviceOff = () => tv.turnOff(),
             )
-
           case _ =>
             sys.error("No such device")
 
@@ -105,7 +97,7 @@ object main {
     //   turnDeviceOff = () => lighBulb.turnOff(),
     // )
 
-    val energyMeter = SomeComponent.staticDispatch(tv)
+    val energyMeter = EnergyMeter(tv)
 
     energyMeter.startMeasuring()
     Thread.sleep(1000)
@@ -117,7 +109,7 @@ object main {
     energyMeter.stopMeasuring()
     println(energyMeter.wattsConsumedInTotal)
 
-    val energyMeter2 = SomeComponent.staticDispatch(device = lighBulb)
+    val energyMeter2 = EnergyMeter(lighBulb)
 
     energyMeter2.startMeasuring()
     Thread.sleep(1000)
