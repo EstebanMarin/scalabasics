@@ -3,9 +3,9 @@ package com.estebanmarin.scalaplaygound
 class TV extends Device {
   override val wattsperSecond: Int = 500
 
-  override def turnOn(): Unit =
-    println("Turn TV ON")
+  override protected[this] def actuallyTurnOn(): Unit =
+    println("tv on")
 
-  override def turnOff(): Unit =
-    println("Turn TV OFF")
+  override protected[this] def actuallyTurnOff(): Unit =
+    println("tv off")
 }
