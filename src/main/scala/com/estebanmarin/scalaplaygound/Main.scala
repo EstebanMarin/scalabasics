@@ -26,17 +26,6 @@ object main {
     println(energyMeter1.wattsConsumedInTotal)
     println("---")
 
-    val energyMeter2 = new EnergyMeter(tv)
-
-    energyMeter2.startMeasuring()
-    Thread.sleep(1000)
-    energyMeter2.stopMeasuring()
-    println(energyMeter2.wattsConsumedInTotal)
-
-    energyMeter2.startMeasuring()
-    Thread.sleep(1000)
-    energyMeter2.stopMeasuring()
-    println(energyMeter2.wattsConsumedInTotal)
   }
 
 }
