@@ -8,5 +8,35 @@ object main {
     println("-" * 50)
   }
 
-  def code(args: Array[String]): Unit = {}
+  def code(args: Array[String]): Unit = {
+
+    val bulb = new LightBulb
+    val tv = new TV
+
+    val energyMeter1 = new EnergyMeter(bulb)
+
+    energyMeter1.startMeasuring()
+    Thread.sleep(1000)
+    energyMeter1.stopMeasuring()
+    println(energyMeter1.wattsConsumedInTotal)
+
+    energyMeter1.startMeasuring()
+    Thread.sleep(1000)
+    energyMeter1.stopMeasuring()
+    println(energyMeter1.wattsConsumedInTotal)
+    println("---")
+
+    val energyMeter2 = new EnergyMeter(tv)
+
+    energyMeter2.startMeasuring()
+    Thread.sleep(1000)
+    energyMeter2.stopMeasuring()
+    println(energyMeter2.wattsConsumedInTotal)
+
+    energyMeter2.startMeasuring()
+    Thread.sleep(1000)
+    energyMeter2.stopMeasuring()
+    println(energyMeter2.wattsConsumedInTotal)
+  }
+
 }
