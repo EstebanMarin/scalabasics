@@ -11,50 +11,23 @@ object main {
   }
 
   def code(args: Array[String]): Unit = {
-    class Animal
-    trait Pet {
-      def allowedToSleepInBed: Boolean
+    final class Lamborghini(override val model: String)
+        extends Core.SportCar(model)
+           with Modification.Spoiler {
+      override def brand = "Lamborghini"
     }
 
-    class Cat extends Animal with Pet {
-      val allowedToSleepInBed: Boolean = true
+    final class BMW(override val model: String)
+        extends Core.OrdinaryCar(model)
+           with Modification.Spoiler
+           with Modification.EngineControlUnit
+           with Modification.TurboCharger {
+
+      override def brand = "BMW"
     }
 
-    class Turtle extends Pet {
-      def allowedToSleepInBed: Boolean = false
-    }
-
-    def show(pet: Pet): Unit =
-      println(pet.allowedToSleepInBed)
-
-    val path =
-      "/Users/marinest/adidas/scala/dev/scalaplaygound/src/main/scala/com/estebanmarin/scalaplaygound/Main.scala"
-
-    // show(pet = new Cat)
-    // show(pet = new Turtle)
-
-    trait Timestamp {
-      val creationTime: String = {
-        val formater =
-          java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss")
-
-        java.time.LocalDateTime.now.format(formater)
-      }
-    }
-
-    // class FileWithTimestamp(path: String) extends java.io.File(path) with Timestamp
-
-    // val file = new FileWithTimestamp(path)
-    val file = new java.io.File(path) with Timestamp
-
-    def showName(file: java.io.File): Unit =
-      println(file.getName)
-
-    def showCreationTime(timeStamp: Timestamp) =
-      println(timeStamp.creationTime)
-
-    print(showName(file))
-    print(showCreationTime(file))
+    println(new Lamborghini("Murcielago"))
+    println(new BMW("M3-GTR"))
 
   }
 }
