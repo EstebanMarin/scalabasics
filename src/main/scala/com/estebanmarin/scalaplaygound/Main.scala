@@ -1,33 +1,26 @@
 package com.estebanmarin
 package scalaplaygound
 
-import java.sql.Time
-
 object main {
   def main(args: Array[String]): Unit = {
     println("-" * 50)
     code(args)
+    println()
     println("-" * 50)
   }
 
   def code(args: Array[String]): Unit = {
-    final class Lamborghini(override val model: String)
-        extends Core.SportCar(model)
-           with Modification.Spoiler {
-      override def brand = "Lamborghini"
-    }
 
-    final class BMW(override val model: String)
-        extends Core.OrdinaryCar(model)
-           with Modification.Spoiler
-           with Modification.EngineControlUnit
-           with Modification.TurboCharger {
+    println("Hello")
+    val person = Person(name = "Bob", age = 27, isMale = true)
 
-      override def brand = "BMW"
-    }
+    println(person)
+    println(Console.MAGENTA + ("-" * 50) + Console.RESET)
 
-    println(new Lamborghini("Murcielago"))
-    println(new BMW("M3-GTR"))
+    val human = Human(name = "Bob", age = 27, isMale = true)
 
+    println(human.isMale)
+    println(Human)
   }
+
 }
