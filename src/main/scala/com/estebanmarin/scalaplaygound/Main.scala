@@ -1,9 +1,6 @@
 package com.estebanmarin
 package scalaplaygound
 
-import Helpers._
-import com.estebanmarin.scalaplaygound.Write.Success
-import com.estebanmarin.scalaplaygound.Write.Warning
 object main {
   def main(args: Array[String]): Unit = {
     println("-" * 50)
