@@ -16,31 +16,7 @@ object main {
 
     println("Hello")
 
-    {
-      val file = new File(
-        location = "/src/emm/Main.scala",
-        name = "Main",
-        extention = ".scala",
-        content = "Hello world",
-      )
-
-      // val pf: PartialFunction[Throwable, Write.Result] = ???
-
-      def safeCall(f: () => Write.Result): Write.Result =
-        try f()
-        catch {
-          case _: Throwable => Write.Error("Not enough space in Disk")
-        }
-
-      val optionalCase: Write.Result = safeCall(file.convinientWrite)
-      // val optionalCase: Write.Result = safeCall(file.write)
-
-      optionalCase match {
-        case Write.Error(message) => showRed(s"Error: $message")
-        case Success(size)        => showGreen(s"Happy Days: ${size.toString()}")
-        case Warning(message)     => showYellow(s"warning: $message")
-      }
-    }
+    println("part 22")
 
     println("End")
   }
