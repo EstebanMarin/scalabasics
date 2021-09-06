@@ -23,12 +23,22 @@ object main {
         extention = ".scala",
         content = "Hello world",
       )
-      val optionalCase: Write.Result = file.write()
+
+      // val pf: PartialFunction[Throwable, Write.Result] = ???
+
+      def safeCall(f: () => Write.Result): Write.Result =
+        try f()
+        catch {
+          case _: Throwable => Write.Error("Not enough space in Disk")
+        }
+
+      val optionalCase: Write.Result = safeCall(file.convinientWrite)
+      // val optionalCase: Write.Result = safeCall(file.write)
 
       optionalCase match {
-        case Write.Error(message) => println(s"Error: $message")
-        case Success(size)        => println(s"Happy Days: $size")
-        case Warning(message)     => println(s"warning: $message")
+        case Write.Error(message) => showRed(s"Error: $message")
+        case Success(size)        => showGreen(s"Happy Days: ${size.toString()}")
+        case Warning(message)     => showYellow(s"warning: $message")
       }
     }
 
