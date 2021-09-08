@@ -15,6 +15,9 @@ object main {
 
     println("part 22")
 
+    def test(js: Unit): (Unit, Unit) =
+      (1, 1)
+
     println("End")
   }
 
