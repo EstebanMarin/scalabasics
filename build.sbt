@@ -1,7 +1,7 @@
 import Dependencies._
 
 ThisBuild / organization := "com.estebanmarin"
-ThisBuild / scalaVersion := "2.13.6"
+ThisBuild / scalaVersion := "3.0.2"
 
 lazy val `scalaplaygound` =
   project
@@ -29,6 +29,7 @@ lazy val commonSettings = Seq(
 lazy val dependencies = Seq(
   libraryDependencies ++= Seq(
     // main dependencies
+    "dev.zio" %% "zio" % "2.0.0-M2"
   ),
   libraryDependencies ++= Seq(
     com.github.alexarchambault.`scalacheck-shapeless_1.15`,
