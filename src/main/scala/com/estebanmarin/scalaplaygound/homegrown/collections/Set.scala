@@ -1,3 +1,5 @@
 package com.estebanmarin.scalaplaygound.homegrown.collections
 
-object Set
+object Set {
+  def empty: String => Boolean = input => false
+}
