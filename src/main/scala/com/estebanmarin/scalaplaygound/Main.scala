@@ -12,9 +12,6 @@ object main {
   def code(args: Array[String]): Unit = {
 
     println("Hello")
-
-    println("part 22")
-
     println("End")
   }
 
