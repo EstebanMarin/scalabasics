@@ -1,8 +1,6 @@
 import com.estebanmarin.scalaplaygound.CreditCard
 
-import org.scalatest._
 import org.scalatest.funsuite._
-import org.scalatest.matchers._
 import org.scalatest.matchers.should._
 
 class CreditCardSuite extends AnyFunSuite with Matchers {
