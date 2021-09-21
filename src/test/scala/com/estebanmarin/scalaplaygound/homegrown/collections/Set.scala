@@ -110,6 +110,12 @@ class SetSuite extends AnyFunSuite with Matchers {
     leftIntersection(c) shouldBe true
     leftIntersection(d) shouldBe false
 
+    val rightIntersection = right.intersection(left)
+    rightIntersection(a) shouldBe false
+    rightIntersection(b) shouldBe false
+    rightIntersection(c) shouldBe true
+    rightIntersection(d) shouldBe false
+
   }
   test("difference on a non empty set with a empty set should yield an empty set") {
     val first = randomString
