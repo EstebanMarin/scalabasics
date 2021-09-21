@@ -10,5 +10,5 @@ trait OldSet extends (String => Boolean) {
 }
 
 object OldSet {
-  lazy val empty: Set = input => false
+  lazy val empty: OldSet = input => false
 }
