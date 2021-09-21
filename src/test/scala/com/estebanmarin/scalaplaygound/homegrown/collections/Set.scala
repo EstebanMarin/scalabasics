@@ -86,8 +86,36 @@ class SetSuite extends AnyFunSuite with Matchers {
     union(c) shouldBe true
     union(d) shouldBe true
   }
-  test("intersection on empty Set shouild yield and empty Set") {
+  test("intersection on empty Set should yield and empty Set") {
     Set.empty.intersection(Set.empty)(randomString) shouldBe false
+  }
+  test("intersection on non empty set should yield their intersection") {
+    val a = randomString
+    val b = randomString
+    val c = randomString
+    val d = randomString
+
+    val left = Set.empty.add(a).add(b).add(c)
+    val right = Set.empty.add(c).add(d)
+
+    val intersection = left.intersection(right)
+    intersection(a) shouldBe false
+    intersection(b) shouldBe false
+    intersection(c) shouldBe true
+    intersection(d) shouldBe false
+  }
+  test("difference on a non empty set with a empty set should yield an empty set") {
+    val first = randomString
+    val second = randomString
+
+    val emptySet = Set.empty
+    val nonEmptySet = Set.empty.add(first).add(second)
+
+    emptySet.difference(nonEmptySet)(first) shouldBe false
+    emptySet.difference(nonEmptySet)(second) shouldBe false
+
+    nonEmptySet.difference(that = emptySet)(first) shouldBe true
+    nonEmptySet.difference(that = emptySet)(second) shouldBe true
   }
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString
