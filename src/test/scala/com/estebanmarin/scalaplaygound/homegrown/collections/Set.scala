@@ -69,7 +69,7 @@ class SetSuite extends AnyFunSuite with Matchers {
     emptySet.union(nonEmptySet)(second) shouldBe true
 
     nonEmptySet.union(emptySet)(first) shouldBe true
-    nonEmptySet.union(emptySet)(second) shouldBe false
+    nonEmptySet.union(emptySet)(second) shouldBe true
   }
   test("union on non empty set should yield their union") {
     val a = randomString
@@ -78,7 +78,7 @@ class SetSuite extends AnyFunSuite with Matchers {
     val d = randomString
 
     val left = Set.empty.add(a).add(b)
-    val right = Set.empty.add(c).add(b)
+    val right = Set.empty.add(c).add(d)
 
     val union = left.union(right)
     union(a) shouldBe true
