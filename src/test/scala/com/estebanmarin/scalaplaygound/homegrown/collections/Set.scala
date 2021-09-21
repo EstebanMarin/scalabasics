@@ -22,6 +22,11 @@ class SetSuite extends AnyFunSuite with Matchers {
     set(first) shouldBe true
     set(second) shouldBe true
   }
+  test("remove on an empty set should yield an empty set") {
+    val element = randomString
+    val stillEmpty = Set.empty.remove(element)
+    stillEmpty(element) shouldBe false
+  }
   test("remove on a non empty Set should yield a new Set without the element") {
     val element = randomString
     val setWithElement = Set.empty.add(element)
@@ -151,7 +156,8 @@ class SetSuite extends AnyFunSuite with Matchers {
     rightDifference(c) shouldBe false
     rightDifference(d) shouldBe true
   }
-  ignore("is Subsetof on an empty Set should yield true") {
+  test("is Subsetof on an empty Set should yield true") {
+    pending
     Set.empty.isSubsetOf(Set.empty) shouldBe true
     Set.empty.isSubsetOf(Set.empty.add(randomString)) shouldBe true
   }
