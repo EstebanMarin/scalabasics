@@ -11,5 +11,4 @@ trait Set extends (String => Boolean) {
 
 object Set {
   lazy val empty: Set = input => false
-
 }
