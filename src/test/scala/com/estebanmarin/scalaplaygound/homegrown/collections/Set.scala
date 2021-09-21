@@ -117,6 +117,27 @@ class SetSuite extends AnyFunSuite with Matchers {
     nonEmptySet.difference(that = emptySet)(first) shouldBe true
     nonEmptySet.difference(that = emptySet)(second) shouldBe true
   }
+  test("difference on non two empty Sets should yield their difference") {
+    val a = randomString
+    val b = randomString
+    val c = randomString
+    val d = randomString
+
+    val left = Set.empty.add(a).add(b).add(c)
+    val right = Set.empty.add(b).add(c).add(d)
+
+    val leftDifference = left.difference(right)
+    leftDifference(a) shouldBe true
+    leftDifference(b) shouldBe false
+    leftDifference(c) shouldBe false
+    leftDifference(d) shouldBe false
+
+    val rightDifference = right.difference(left)
+    rightDifference(a) shouldBe false
+    rightDifference(b) shouldBe false
+    rightDifference(c) shouldBe false
+    rightDifference(d) shouldBe true
+  }
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString
 }
