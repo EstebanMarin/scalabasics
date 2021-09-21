@@ -80,11 +80,17 @@ class SetSuite extends AnyFunSuite with Matchers {
     val left = Set.empty.add(a).add(b)
     val right = Set.empty.add(c).add(d)
 
-    val union = left.union(right)
-    union(a) shouldBe true
-    union(b) shouldBe true
-    union(c) shouldBe true
-    union(d) shouldBe true
+    val leftUnion = left.union(right)
+    leftUnion(a) shouldBe true
+    leftUnion(b) shouldBe true
+    leftUnion(c) shouldBe true
+    leftUnion(d) shouldBe true
+
+    val rightUnion = left.union(right)
+    rightUnion(a) shouldBe true
+    rightUnion(b) shouldBe true
+    rightUnion(c) shouldBe true
+    rightUnion(d) shouldBe true
   }
   test("intersection on empty Set should yield and empty Set") {
     Set.empty.intersection(Set.empty)(randomString) shouldBe false
@@ -98,11 +104,12 @@ class SetSuite extends AnyFunSuite with Matchers {
     val left = Set.empty.add(a).add(b).add(c)
     val right = Set.empty.add(c).add(d)
 
-    val intersection = left.intersection(right)
-    intersection(a) shouldBe false
-    intersection(b) shouldBe false
-    intersection(c) shouldBe true
-    intersection(d) shouldBe false
+    val leftIntersection = left.intersection(right)
+    leftIntersection(a) shouldBe false
+    leftIntersection(b) shouldBe false
+    leftIntersection(c) shouldBe true
+    leftIntersection(d) shouldBe false
+
   }
   test("difference on a non empty set with a empty set should yield an empty set") {
     val first = randomString
@@ -137,6 +144,10 @@ class SetSuite extends AnyFunSuite with Matchers {
     rightDifference(b) shouldBe false
     rightDifference(c) shouldBe false
     rightDifference(d) shouldBe true
+  }
+  ignore("is Subsetof on an empty Set should yield true") {
+    Set.empty.isSubsetOf(Set.empty) shouldBe true
+    Set.empty.isSubsetOf(Set.empty.add(randomString)) shouldBe true
   }
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString

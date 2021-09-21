@@ -6,6 +6,7 @@ trait Set extends (String => Boolean) {
   final def union(that: Set): Set = element => this(element) || that(element)
   final def intersection(that: Set): Set = element => this(element) && that(element)
   final def difference(that: Set): Set = element => this(element) && !that(element)
+  final def isSubsetOf(that: Set): Boolean = ???
 }
 
 object Set {
