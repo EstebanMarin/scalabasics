@@ -20,7 +20,14 @@ object Set {
       if (input == element) otherElements else NonEmpty(element, otherElements.remove(input))
     final override def union(that: Set): Set =
       otherElements.union(that.add(element))
-    override def intersection(that: Set): Set = ???
+    override def intersection(that: Set): Set = {
+      val intersectionofOthers = otherElements.intersection(that)
+      if (that(element))
+        intersectionofOthers.add(element)
+      else
+        intersectionofOthers
+    }
+
   }
   final private case object Empty extends Set {
     final override def apply(v1: String): Boolean = false
