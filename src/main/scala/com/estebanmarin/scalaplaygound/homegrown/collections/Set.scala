@@ -1,6 +1,7 @@
 package com.estebanmarin.scalaplaygound.homegrown.collections
 
 sealed trait Set extends (String => Boolean) {
+  // importing the companing object
   import Set._
   final override def apply(input: String): Boolean = {
     var result = false
