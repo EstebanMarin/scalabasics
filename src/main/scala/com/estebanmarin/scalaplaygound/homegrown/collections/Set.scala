@@ -14,7 +14,7 @@ object Set {
     final override def apply(input: String): Boolean =
       input == element || otherElements(input)
 
-    final override def add(input: String): Set = NonEmpty(input, otherElements.add(input))
+    final override def add(input: String): Set = NonEmpty(input, otherElements.add(element))
     final override def remove(input: String): Set =
       if (input == element) otherElements else ???
   }

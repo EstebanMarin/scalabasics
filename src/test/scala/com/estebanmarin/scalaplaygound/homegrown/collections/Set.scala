@@ -18,7 +18,7 @@ class SetSuite extends AnyFunSuite with Matchers {
     val first = randomString
     val second = randomString
     first should not be second
-    val set = OldSet.empty.add(first).add(second)
+    val set = Set.empty.add(first).add(second)
     set(first) shouldBe true
     set(second) shouldBe true
   }
