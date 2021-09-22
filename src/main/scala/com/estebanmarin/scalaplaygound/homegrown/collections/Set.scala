@@ -5,9 +5,8 @@ trait Set extends (String => Boolean) {
   def remove(input: String): Set
   def union(that: Set): Set
   def intersection(that: Set): Set
-  // final def intersection(that: Set): Set = element => this(element) && that(element)
-  // final def difference(that: Set): Set = element => this(element) && !that(element)
-  // final def isSubsetOf(that: Set): Boolean = ???
+  def difference(that: Set): Set
+  def isSubsetOf(that: Set): Boolean = ???
 }
 
 object Set {
@@ -27,7 +26,13 @@ object Set {
       else
         intersectionofOthers
     }
-
+    override def difference(that: Set): Set = {
+      val differencefOthers = otherElements.difference(that)
+      if (that(element))
+        differencefOthers
+      else
+        differencefOthers.add(element)
+    }
   }
   final private case object Empty extends Set {
     final override def apply(v1: String): Boolean = false
@@ -35,6 +40,7 @@ object Set {
     final override def remove(input: String): Set = this
     override def union(that: Set): Set = that
     override def intersection(that: Set): Set = this
+    override def difference(that: Set): Set = this
 
   }
 

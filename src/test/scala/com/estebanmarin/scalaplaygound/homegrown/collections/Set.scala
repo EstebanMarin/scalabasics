@@ -24,7 +24,7 @@ class SetSuite extends AnyFunSuite with Matchers {
   }
   test("4- remove on an empty set should yield an empty set") {
     val element = randomString
-    val stillEmpty = OldSet.empty.remove(element)
+    val stillEmpty = Set.empty.remove(element)
     stillEmpty(element) shouldBe false
   }
   test("5- remove on a non empty Set should yield a new Set without the element") {
@@ -127,12 +127,12 @@ class SetSuite extends AnyFunSuite with Matchers {
     rightIntersection(d) shouldBe false
 
   }
-  test("difference on a non empty set with a empty set should yield an empty set") {
+  test("12 - difference on a non empty set with a empty set should yield an empty set") {
     val first = randomString
     val second = randomString
 
-    val emptySet = OldSet.empty
-    val nonEmptySet = OldSet.empty.add(first).add(second)
+    val emptySet = Set.empty
+    val nonEmptySet = Set.empty.add(first).add(second)
 
     emptySet.difference(nonEmptySet)(first) shouldBe false
     emptySet.difference(nonEmptySet)(second) shouldBe false
@@ -140,14 +140,14 @@ class SetSuite extends AnyFunSuite with Matchers {
     nonEmptySet.difference(that = emptySet)(first) shouldBe true
     nonEmptySet.difference(that = emptySet)(second) shouldBe true
   }
-  test("difference on non two empty Sets should yield their difference") {
+  test("13 difference on non two empty Sets should yield their difference") {
     val a = randomString
     val b = randomString
     val c = randomString
     val d = randomString
 
-    val left = OldSet.empty.add(a).add(b).add(c)
-    val right = OldSet.empty.add(b).add(c).add(d)
+    val left = Set.empty.add(a).add(b).add(c)
+    val right = Set.empty.add(b).add(c).add(d)
 
     val leftDifference = left.difference(right)
     leftDifference(a) shouldBe true
@@ -163,8 +163,8 @@ class SetSuite extends AnyFunSuite with Matchers {
   }
   test("is Subsetof on an empty Set should yield true") {
     pending
-    OldSet.empty.isSubsetOf(OldSet.empty) shouldBe true
-    OldSet.empty.isSubsetOf(OldSet.empty.add(randomString)) shouldBe true
+    Set.empty.isSubsetOf(Set.empty) shouldBe true
+    Set.empty.isSubsetOf(Set.empty.add(randomString)) shouldBe true
   }
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString
