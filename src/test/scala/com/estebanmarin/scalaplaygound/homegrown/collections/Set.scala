@@ -204,7 +204,32 @@ class SetSuite extends AnyFunSuite with Matchers {
     Set.empty.add(randomString).isEmpty shouldBe false
     Set.empty.add(randomString).nonEmpty shouldBe true
   }
+  test("isSingleton on an empty Set should yield false") {
+    Set.empty.isSingleton shouldBe false
+  }
 
+  test("isSingleton on a Set with more than one element should yield false") {
+    val first = randomString
+    val second = randomString
+
+    first should not be second
+
+    Set.empty.add(first).add(second).isSingleton shouldBe false
+  }
+
+  test("isSingleton on a Set with a single element should yield true") {
+    Set.empty.add(randomString).isSingleton shouldBe true
+  }
+
+  test("sample should yield a random element from the Set") {
+    Set.empty.sample shouldBe None
+
+    val a = randomString
+    Set.empty.add(a).sample shouldBe Some(a)
+
+    val b = randomString
+    Set.empty.add(a).add(b).sample should contain oneOf (a, b)
+  }
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString
 }
