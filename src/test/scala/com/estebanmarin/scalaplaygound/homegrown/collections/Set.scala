@@ -163,6 +163,23 @@ class SetSuite extends AnyFunSuite with Matchers {
     left.isSupersetOf(right) shouldBe false
     left.isSupersetOf(left) shouldBe true
   }
+  test("18 - hashCode on an empty set should not be random") {
+    Set.empty.hashCode shouldBe Set.empty.hashCode
+    val element = randomString
+    Set.empty.add(element).hashCode shouldBe Set.empty.add(element).hashCode
+  }
+  test("19 - hashCode on an empty Set should not be 0") {
+    Set.empty.hashCode should not be 0
+  }
+  test(
+    "20 - on a non empty Set should be the sum of all the hashCodes and the hashCode of the empty set"
+  ) {
+    val first = randomString
+    val second = randomString
+    val expected = Set.empty.hashCode + first.hashCode + second.hashCode
+
+    Set.empty.add(first).add(second).hashCode shouldBe expected
+  }
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString
 }

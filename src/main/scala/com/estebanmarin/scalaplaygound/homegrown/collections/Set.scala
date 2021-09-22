@@ -41,6 +41,8 @@ object Set {
     }
     final override def isSubsetOf(that: Set): Boolean =
       that(element) && otherElements.isSubsetOf(that)
+    final override def hashCode: Int =
+      element.hashCode + otherElements.hashCode
 
   }
   final private case object Empty extends Set {
