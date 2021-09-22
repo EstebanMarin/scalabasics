@@ -61,8 +61,8 @@ class SetSuite extends AnyFunSuite with Matchers {
     val set = Set.empty.add(element).add(element).remove(element)
     set(element) shouldBe false
   }
-  test("union on an empty set should yield an empty set") {
-    OldSet.empty.union(OldSet.empty)(randomString) shouldBe false
+  test("9 - union on an empty set should yield an empty set") {
+    Set.empty.union(Set.empty)(randomString) shouldBe false
   }
   test(
     "union on a non empty Set with an empty set should yield the original Set untouched"
