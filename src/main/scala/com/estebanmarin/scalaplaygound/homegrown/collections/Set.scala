@@ -16,7 +16,7 @@ object Set {
 
     final override def add(input: String): Set = NonEmpty(input, otherElements.add(element))
     final override def remove(input: String): Set =
-      if (input == element) otherElements else ???
+      if (input == element) otherElements else NonEmpty(element, otherElements.remove(input))
   }
   final private case object Empty extends Set {
     final override def apply(v1: String): Boolean = false

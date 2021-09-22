@@ -3,10 +3,10 @@ import org.scalatest.funsuite._
 import org.scalatest.matchers.should._
 
 class SetSuite extends AnyFunSuite with Matchers {
-  test("apply on empty set should yield 0") {
+  test("1 - apply on empty set should yield 0") {
     Set.empty(randomString) shouldBe false
   }
-  test("add on an empty set should yield a new Set with one element") {
+  test("2- add on an empty set should yield a new Set with one element") {
     val first = randomString
     val second = randomString
     first should not be second
@@ -14,7 +14,7 @@ class SetSuite extends AnyFunSuite with Matchers {
     set(first) shouldBe true
     set(second)
   }
-  test("add on an non empty set should yield a new Set with two element") {
+  test("3- add on an non empty set should yield a new Set with two element") {
     val first = randomString
     val second = randomString
     first should not be second
@@ -22,14 +22,14 @@ class SetSuite extends AnyFunSuite with Matchers {
     set(first) shouldBe true
     set(second) shouldBe true
   }
-  test("remove on an empty set should yield an empty set") {
+  test("4- remove on an empty set should yield an empty set") {
     val element = randomString
     val stillEmpty = OldSet.empty.remove(element)
     stillEmpty(element) shouldBe false
   }
-  test("remove on a non empty Set should yield a new Set without the element") {
+  test("5- remove on a non empty Set should yield a new Set without the element") {
     val element = randomString
-    val setWithElement = OldSet.empty.add(element)
+    val setWithElement = Set.empty.add(element)
     setWithElement(element) shouldBe true
     val setWithoutTheElement = setWithElement.remove(element)
     setWithoutTheElement(element) shouldBe false
