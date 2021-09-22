@@ -14,14 +14,15 @@ object Set {
     final override def apply(input: String): Boolean =
       input == element || otherElements(input)
 
-    def add(input: String): Set = NonEmpty(input, otherElements.add(input))
-    def remove(input: String): Set = ???
+    final override def add(input: String): Set = NonEmpty(input, otherElements.add(input))
+    final override def remove(input: String): Set =
+      if (input == element) otherElements else ???
   }
   final private case object Empty extends Set {
-    def apply(v1: String): Boolean = false
+    final override def apply(v1: String): Boolean = false
 
-    def add(input: String): Set = NonEmpty(input, Empty)
-    def remove(input: String): Set = ???
+    final override def add(input: String): Set = NonEmpty(input, Empty)
+    final override def remove(input: String): Set = this
   }
 
   lazy val empty: Set = Empty
