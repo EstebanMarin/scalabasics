@@ -2,89 +2,65 @@ package com.estebanmarin.scalaplaygound.homegrown.collections
 
 sealed trait Set extends (String => Boolean) {
   import Set._
-
   final override def apply(input: String): Boolean = {
     var result = false
-
     foreach { current =>
       result = result || current == input
     }
-
     result
   }
-
   final def add(input: String): Set = {
     var result = NonEmpty(input, empty)
-
     foreach { current =>
       if (current != input)
         result = NonEmpty(current, result)
     }
-
     result
   }
-
   final def remove(input: String): Set = {
     var result = empty
-
     foreach { current =>
       if (current != input)
         result = NonEmpty(current, result)
     }
-
     result
   }
-
   final def union(that: Set): Set = {
     var result = that
-
     foreach { current =>
       result = result.add(current)
     }
-
     result
   }
-
   final def intersection(that: Set): Set = {
     var result = empty
-
     foreach { current =>
       if (that(current))
         result = result.add(current)
     }
-
     result
   }
-
   final def difference(that: Set): Set = {
     var result = empty
-
     foreach { current =>
       if (!that(current))
         result = result.add(current)
     }
-
     result
   }
-
   final def isSubsetOf(that: Set): Boolean = {
     var result = true
-
     foreach { current =>
       result = result && that(current)
     }
-
     result
   }
-
   final def isSupersetOf(that: Set): Boolean =
     that.isSubsetOf(this)
-
   final override def equals(other: Any): Boolean = other match {
     case that: Set => this.isSubsetOf(that) && that.isSubsetOf(this)
     case _         => false
   }
-
   final override def hashCode: Int =
     if (isEmpty)
       41
@@ -95,14 +71,11 @@ sealed trait Set extends (String => Boolean) {
 
       element.hashCode + otherElements.hashCode
     }
-
   final def size: Int = {
     var result = 0
-
     foreach { _ =>
       result = result + 1
     }
-
     result
   }
 
