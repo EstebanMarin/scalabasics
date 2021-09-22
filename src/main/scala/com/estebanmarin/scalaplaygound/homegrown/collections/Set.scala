@@ -9,6 +9,10 @@ trait Set extends (String => Boolean) {
   def isSubsetOf(that: Set): Boolean
   final def isSupersetOf(that: Set): Boolean =
     that.isSubsetOf(this)
+  final override def equals(other: Any): Boolean = other match {
+    case that: Set => this.isSubsetOf(that) && that.isSubsetOf(this)
+    case _         => false
+  }
 }
 
 object Set {
