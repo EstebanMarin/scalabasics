@@ -196,6 +196,14 @@ class SetSuite extends AnyFunSuite with Matchers {
     val element = randomString
     Set.empty.add(element).add(element).size shouldBe 1
   }
+  test("isEmpty on an empty Set should yield true") {
+    Set.empty.isEmpty shouldBe true
+    Set.empty.nonEmpty shouldBe false
+  }
+  test("isEmpty on a non empty Set should yield false") {
+    Set.empty.add(randomString).isEmpty shouldBe false
+    Set.empty.add(randomString).nonEmpty shouldBe true
+  }
 
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString

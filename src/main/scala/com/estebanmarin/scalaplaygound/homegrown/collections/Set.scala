@@ -14,6 +14,9 @@ trait Set extends (String => Boolean) {
     case _         => false
   }
   def size: Int
+  def isEmpty: Boolean
+  final def nonEmpty: Boolean =
+    !isEmpty
 }
 
 object Set {
@@ -45,7 +48,7 @@ object Set {
     final override def hashCode: Int =
       element.hashCode + otherElements.hashCode
     final override def size: Int = 1 + otherElements.size
-
+    override def isEmpty: Boolean = false
   }
   final private case object Empty extends Set {
     final override def apply(v1: String): Boolean = false
@@ -56,6 +59,8 @@ object Set {
     final override def difference(that: Set): Set = this
     final override def isSubsetOf(that: Set): Boolean = true
     final override def size: Int = 0
+    override def isEmpty: Boolean = true
+
   }
 
   lazy val empty: Set = Empty
