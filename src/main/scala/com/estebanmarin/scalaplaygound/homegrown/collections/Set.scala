@@ -7,6 +7,8 @@ trait Set extends (String => Boolean) {
   def intersection(that: Set): Set
   def difference(that: Set): Set
   def isSubsetOf(that: Set): Boolean
+  final def isSupersetOf(that: Set): Boolean =
+    that.isSubsetOf(this)
 }
 
 object Set {

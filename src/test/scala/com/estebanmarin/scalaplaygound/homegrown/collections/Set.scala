@@ -178,6 +178,19 @@ class SetSuite extends AnyFunSuite with Matchers {
     left.isSubsetOf(right) shouldBe true
     right.isSubsetOf(left) shouldBe false
   }
+  test("16 - isSuperset on itself should yield true") {
+    val set = Set.empty.add(randomString)
+    set.isSupersetOf(set) shouldBe true
+  }
+  test("17 - isSuperset on a non empty Set should yield false") {
+    val a = randomString
+    val b = randomString
+    val c = randomString
+    val left = Set.empty.add(a).add(b)
+    val right = left.add(c)
+    left.isSupersetOf(right) shouldBe false
+    left.isSupersetOf(left) shouldBe true
+  }
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString
 }
