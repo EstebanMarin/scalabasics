@@ -34,10 +34,10 @@ class SetSuite extends AnyFunSuite with Matchers {
     val setWithoutTheElement = setWithElement.remove(element)
     setWithoutTheElement(element) shouldBe false
   }
-  test("remove only the element in question") {
+  test("6 - remove only the element in question") {
     val first = randomString
     val second = randomString
-    val setWithElement = OldSet.empty.add(first).add(second)
+    val setWithElement = Set.empty.add(first).add(second)
     setWithElement(first) shouldBe true
     setWithElement(second) shouldBe true
     val setWithoutTheElement = setWithElement.remove(second)
@@ -45,16 +45,21 @@ class SetSuite extends AnyFunSuite with Matchers {
     setWithoutTheElement(first) shouldBe true
     setWithoutTheElement(second) shouldBe false
   }
-  test("remove only the element in question 2") {
+  test("7 - remove only the element in question 2") {
     val first = randomString
     val second = randomString
-    val setWithElement = OldSet.empty.add(first).add(second)
+    val setWithElement = Set.empty.add(first).add(second)
     setWithElement(first) shouldBe true
     setWithElement(second) shouldBe true
     val setWithoutTheElement = setWithElement.remove(first)
 
     setWithoutTheElement(first) shouldBe false
     setWithoutTheElement(second) shouldBe true
+  }
+  test("8 - add/remove should ensure that all elements are distinct") {
+    val element = randomString
+    val set = Set.empty.add(element).add(element).remove(element)
+    set(element) shouldBe false
   }
   test("union on an empty set should yield an empty set") {
     OldSet.empty.union(OldSet.empty)(randomString) shouldBe false
