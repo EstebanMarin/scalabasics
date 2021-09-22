@@ -4,7 +4,7 @@ import org.scalatest.matchers.should._
 
 class SetSuite extends AnyFunSuite with Matchers {
   test("apply on empty set should yield 0") {
-    OldSet.empty(randomString) shouldBe false
+    Set.empty(randomString) shouldBe false
   }
   test("add on an empty set should yield a new Set with one element") {
     val first = randomString
