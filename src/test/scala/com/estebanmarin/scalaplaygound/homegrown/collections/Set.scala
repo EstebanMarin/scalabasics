@@ -161,10 +161,13 @@ class SetSuite extends AnyFunSuite with Matchers {
     rightDifference(c) shouldBe false
     rightDifference(d) shouldBe true
   }
-  test("is Subsetof on an empty Set should yield true") {
-    pending
+  test("13 - is Subsetof on an empty Set should yield true") {
     Set.empty.isSubsetOf(Set.empty) shouldBe true
     Set.empty.isSubsetOf(Set.empty.add(randomString)) shouldBe true
+  }
+  test("14 - isSubsetOf on itself should yield true") {
+    val set = Set.empty.add(randomString)
+    set.isSubsetOf(set) shouldBe true
   }
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString
