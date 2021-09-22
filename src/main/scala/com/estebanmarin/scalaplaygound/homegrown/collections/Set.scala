@@ -21,10 +21,8 @@ object Set {
     final override def remove(input: String): Set =
       if (input == element) otherElements else NonEmpty(element, otherElements.remove(input))
 
-    final override def union(that: Set): Set = {
-      val newSet = that.add(element)
-      otherElements.union(newSet)
-    }
+    final override def union(that: Set): Set =
+      otherElements.union(that.add(element))
 
   }
   final private case object Empty extends Set {
