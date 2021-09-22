@@ -90,17 +90,8 @@ class SetSuite extends AnyFunSuite with Matchers {
     val left = Set.empty.add(a).add(b)
     val right = Set.empty.add(c).add(d)
 
-    val leftUnion = left.union(right)
-    leftUnion(a) shouldBe true
-    leftUnion(b) shouldBe true
-    leftUnion(c) shouldBe true
-    leftUnion(d) shouldBe true
-
-    val rightUnion = left.union(right)
-    rightUnion(a) shouldBe true
-    rightUnion(b) shouldBe true
-    rightUnion(c) shouldBe true
-    rightUnion(d) shouldBe true
+    left.union(right) shouldBe (Set.empty.add(a).add(b).add(c).add(d))
+    right.union(left) shouldBe (Set.empty.add(a).add(b).add(c).add(d))
   }
   test("10 - intersection on empty Set should yield and empty Set") {
     Set.empty.intersection(Set.empty)(randomString) shouldBe false
@@ -114,18 +105,8 @@ class SetSuite extends AnyFunSuite with Matchers {
     val left = Set.empty.add(a).add(b).add(c)
     val right = Set.empty.add(c).add(d)
 
-    val leftIntersection = left.intersection(right)
-    leftIntersection(a) shouldBe false
-    leftIntersection(b) shouldBe false
-    leftIntersection(c) shouldBe true
-    leftIntersection(d) shouldBe false
-
-    val rightIntersection = right.intersection(left)
-    rightIntersection(a) shouldBe false
-    rightIntersection(b) shouldBe false
-    rightIntersection(c) shouldBe true
-    rightIntersection(d) shouldBe false
-
+    left.intersection(right) shouldBe (Set.empty.add(c))
+    right.intersection(left) shouldBe (Set.empty.add(c))
   }
   test("12 - difference on a non empty set with a empty set should yield an empty set") {
     val first = randomString
@@ -149,17 +130,8 @@ class SetSuite extends AnyFunSuite with Matchers {
     val left = Set.empty.add(a).add(b).add(c)
     val right = Set.empty.add(b).add(c).add(d)
 
-    val leftDifference = left.difference(right)
-    leftDifference(a) shouldBe true
-    leftDifference(b) shouldBe false
-    leftDifference(c) shouldBe false
-    leftDifference(d) shouldBe false
-
-    val rightDifference = right.difference(left)
-    rightDifference(a) shouldBe false
-    rightDifference(b) shouldBe false
-    rightDifference(c) shouldBe false
-    rightDifference(d) shouldBe true
+    left.difference(right) shouldBe (Set.empty.add(a))
+    right.difference(left) shouldBe (Set.empty.add(d))
   }
   test("13 - is Subsetof on an empty Set should yield true") {
     Set.empty.isSubsetOf(Set.empty) shouldBe true
