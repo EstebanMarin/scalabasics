@@ -13,6 +13,7 @@ trait Set extends (String => Boolean) {
     case that: Set => this.isSubsetOf(that) && that.isSubsetOf(this)
     case _         => false
   }
+  def size: Int
 }
 
 object Set {
@@ -43,6 +44,7 @@ object Set {
       that(element) && otherElements.isSubsetOf(that)
     final override def hashCode: Int =
       element.hashCode + otherElements.hashCode
+    final override def size: Int = 1 + otherElements.size
 
   }
   final private case object Empty extends Set {
@@ -53,7 +55,7 @@ object Set {
     final override def intersection(that: Set): Set = this
     final override def difference(that: Set): Set = this
     final override def isSubsetOf(that: Set): Boolean = true
-
+    final override def size: Int = 0
   }
 
   lazy val empty: Set = Empty

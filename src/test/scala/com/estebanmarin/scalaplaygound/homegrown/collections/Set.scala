@@ -4,7 +4,7 @@ import org.scalatest.matchers.should._
 
 class SetSuite extends AnyFunSuite with Matchers {
   test("1 - apply on empty set should yield 0") {
-    Set.empty(randomString) shouldBe false
+    Set.empty.size shouldBe 0
   }
   test("2- add on an empty set should yield a new Set with one element") {
     val first = randomString
@@ -180,6 +180,23 @@ class SetSuite extends AnyFunSuite with Matchers {
 
     Set.empty.add(first).add(second).hashCode shouldBe expected
   }
+  test("size on an empty Set should be 0") {
+    Set.empty.size shouldBe 0
+  }
+  test("size on a non empty Set should be 1") {
+    Set.empty.add(randomString).size shouldBe 1
+  }
+  test("size on a non empty Set with 2 distinct elements added should be 2") {
+    val first = randomString
+    val second = randomString
+    first should not be second
+    Set.empty.add(first).add(second).size shouldBe 2
+  }
+  test("size on a non empty Set with 2 equal elements added should be 1") {
+    val element = randomString
+    Set.empty.add(element).add(element).size shouldBe 1
+  }
+
   private def randomString: String =
     scala.util.Random.alphanumeric.take(5).mkString
 }
