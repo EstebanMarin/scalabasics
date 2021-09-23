@@ -21,16 +21,10 @@ sealed trait Set[Element] extends (Element => Boolean) {
       if (current == input) acc else NonEmpty(current, acc)
     }
 
-  final def remove(input: Element): Set[Element] = {
-    var result = empty[Element]
-
-    foreach { current =>
-      if (current != input)
-        result = NonEmpty(current, result)
+  final def remove(input: Element): Set[Element] =
+    fold(empty[Element]) { (acc, current) =>
+      if (current == input) acc else NonEmpty(current, acc)
     }
-
-    result
-  }
 
   final def union(that: Set[Element]): Set[Element] = {
     var result = that
