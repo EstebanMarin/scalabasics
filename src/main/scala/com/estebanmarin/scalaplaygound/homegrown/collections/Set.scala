@@ -99,15 +99,8 @@ sealed trait Set[Element] extends (Element => Boolean) {
 }
 
 object Set {
-  def apply[Element](element: Element, otherElements: Element*): Set[Element] = {
-    var result: Set[Element] = empty[Element].add(element)
-
-    otherElements.foreach { current =>
-      result = result.add(current)
-    }
-
-    result
-  }
+  def apply[Element](element: Element, otherElements: Element*): Set[Element] =
+    otherElements.foldLeft(empty[Element].add(element))(_ add _)
 
   final private case class NonEmpty[Element](element: Element, otherElements: Set[Element])
       extends Set[Element]
