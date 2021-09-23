@@ -3,9 +3,7 @@ package com.estebanmarin.scalaplaygound.homegrown.collections
 sealed trait Set[Element] extends (Element => Boolean) {
   import Set._
   final override def apply(input: Element): Boolean =
-    fold(false) { (acc, element) =>
-      acc || element == input
-    }
+    fold(false)(_ || _ == input)
 
   @scala.annotation.tailrec
   final def fold[R](seed: R)(function: (R, Element) => R): R =
