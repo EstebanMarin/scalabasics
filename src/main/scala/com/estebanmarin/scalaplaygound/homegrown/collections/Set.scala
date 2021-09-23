@@ -16,16 +16,10 @@ sealed trait Set[Element] extends (Element => Boolean) {
       otherElements.fold[R](function(seed, element))(function)
     }
 
-  final def add(input: Element): Set[Element] = {
-    var result = NonEmpty(input, empty)
-
-    foreach { current =>
-      if (current != input)
-        result = NonEmpty(current, result)
+  final def add(input: Element): Set[Element] =
+    fold(NonEmpty(input, empty)) { (acc, current) =>
+      if (current == input) acc else NonEmpty(current, acc)
     }
-
-    result
-  }
 
   final def remove(input: Element): Set[Element] = {
     var result = empty[Element]
