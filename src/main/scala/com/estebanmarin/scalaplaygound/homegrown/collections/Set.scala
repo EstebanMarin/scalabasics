@@ -3,18 +3,19 @@ package com.estebanmarin.scalaplaygound.homegrown.collections
 sealed trait Set[Element] extends (Element => Boolean) {
   import Set._
   final override def apply(input: Element): Boolean =
-    fold(false)(_ || _ == input)
-
-  @scala.annotation.tailrec
-  final def fold[R](seed: R)(function: (R, Element) => R): R =
-    if (isEmpty)
-      seed
-    else {
-      val nonEmptySet: NonEmpty[Element] = this.asInstanceOf[NonEmpty[Element]]
-      val element: Element = nonEmptySet.element
-      val otherElements: Set[Element] = nonEmptySet.otherElements
-      otherElements.fold[R](function(seed, element))(function)
-    }
+    contains(input)
+  final def doesNotContain(input: Element): Boolean =
+    !contains(input)
+  final def contains(input: Element): Boolean =
+    exists(_ == input)
+  final def doesNotExist(predicate: Element => Boolean): Boolean =
+    !exists(predicate)
+  final def exists(predicate: Element => Boolean): Boolean =
+    fold(false)(_ || predicate(_))
+  final def notForall(predicate: Element => Boolean): Boolean =
+    !forall(predicate)
+  final def forall(predicate: Element => Boolean): Boolean =
+    fold(true)(_ && predicate(_))
 
   final def add(input: Element): Set[Element] =
     fold(NonEmpty(input, empty)) { (acc, current) =>
@@ -29,18 +30,21 @@ sealed trait Set[Element] extends (Element => Boolean) {
   final def union(that: Set[Element]): Set[Element] =
     fold(that)(_ add _)
 
-  final def intersection(that: Set[Element]): Set[Element] =
+  final def intersection(that: Element => Boolean): Set[Element] =
+    filter(that)
+
+  final def filter(predicate: Element => Boolean): Set[Element] =
     fold(empty[Element]) { (acc, current) =>
-      if (that(current)) acc.add(current) else acc
+      if (predicate(current)) acc.add(current) else acc
     }
 
-  final def difference(that: Set[Element]): Set[Element] =
+  final def difference(predicate: Element => Boolean): Set[Element] =
     fold(empty[Element]) { (acc, current) =>
-      if (!that(current)) acc.add(current) else acc
+      if (predicate(current)) acc else acc.add(current)
     }
 
-  final def isSubsetOf(that: Set[Element]): Boolean =
-    fold(true)(_ && that(_))
+  final def isSubsetOf(predicate: Element => Boolean): Boolean =
+    forall(predicate)
 
   final def isSupersetOf(that: Set[Element]): Boolean =
     that.isSubsetOf(this)
@@ -52,6 +56,11 @@ sealed trait Set[Element] extends (Element => Boolean) {
 
   final override def hashCode: Int =
     fold(41)(_ + _.hashCode())
+
+  final override def toString: String =
+    if (isEmpty)
+      "{}"
+    else ???
 
   final def size: Int =
     fold(0) { (acc, _) =>
@@ -96,6 +105,20 @@ sealed trait Set[Element] extends (Element => Boolean) {
     fold(empty[Result]) { (acc, current) =>
       function(current).fold(acc)(_ add _)
     }
+
+  @scala.annotation.tailrec
+  final def fold[R](seed: R)(function: (R, Element) => R): R =
+    if (isEmpty)
+      seed
+    else
+      otherElementsOrThrowExcepetion.fold[R](function(seed, elementOrThrowException))(function)
+
+  private[this] lazy val (elementOrThrowException, otherElementsOrThrowExcepetion) = {
+    val nonEmptySet: NonEmpty[Element] = this.asInstanceOf[NonEmpty[Element]]
+    val element: Element = nonEmptySet.element
+    val otherElements: Set[Element] = nonEmptySet.otherElements
+    element -> otherElements
+  }
 }
 
 object Set {
