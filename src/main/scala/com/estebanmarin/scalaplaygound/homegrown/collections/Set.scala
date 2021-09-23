@@ -34,26 +34,13 @@ sealed trait Set[Element] extends (Element => Boolean) {
       if (that(current)) acc.add(current) else acc
     }
 
-  final def difference(that: Set[Element]): Set[Element] = {
-    var result = empty[Element]
-
-    foreach { current =>
-      if (!that(current))
-        result = result.add(current)
+  final def difference(that: Set[Element]): Set[Element] =
+    fold(empty[Element]) { (acc, current) =>
+      if (!that(current)) acc.add(current) else acc
     }
 
-    result
-  }
-
-  final def isSubsetOf(that: Set[Element]): Boolean = {
-    var result = true
-
-    foreach { current =>
-      result = result && that(current)
-    }
-
-    result
-  }
+  final def isSubsetOf(that: Set[Element]): Boolean =
+    fold(true)(_ && that(_))
 
   final def isSupersetOf(that: Set[Element]): Boolean =
     that.isSubsetOf(this)
