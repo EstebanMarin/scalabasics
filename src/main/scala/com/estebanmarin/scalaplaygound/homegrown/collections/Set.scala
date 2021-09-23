@@ -60,8 +60,14 @@ sealed trait Set[Element] extends (Element => Boolean) {
   final override def toString: String =
     if (isEmpty)
       "{}"
-    else ???
+    else {
+      val otherElementsSplitByCommaSpace =
+        otherElementsOrThrowExcepetion.fold("") { (acc, current) =>
+          s"$acc, $current"
+        }
 
+      "{ " + elementOrThrowException + otherElementsSplitByCommaSpace + " }"
+    }
   final def size: Int =
     fold(0) { (acc, _) =>
       acc + 1
@@ -74,24 +80,10 @@ sealed trait Set[Element] extends (Element => Boolean) {
     !isEmpty
 
   final def isSingleton: Boolean =
-    if (isEmpty)
-      false
-    else {
-      val nonEmptySet = this.asInstanceOf[NonEmpty[Element]]
-      val otherElements = nonEmptySet.otherElements
-
-      otherElements.isEmpty
-    }
+    nonEmpty && otherElementsOrThrowExcepetion.isEmpty
 
   def sample: Option[Element] =
-    if (isEmpty)
-      None
-    else {
-      val nonEmptySet = this.asInstanceOf[NonEmpty[Element]]
-      val element = nonEmptySet.element
-
-      Some(element)
-    }
+    if (isEmpty) None else Some(elementOrThrowException)
 
   final def foreach[Result](function: Element => Result): Unit =
     fold(()) { (_, current) =>
