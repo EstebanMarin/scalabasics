@@ -51,15 +51,7 @@ sealed trait Set[Element] extends (Element => Boolean) {
   }
 
   final override def hashCode: Int =
-    if (isEmpty)
-      41
-    else {
-      val nonEmptySet = this.asInstanceOf[NonEmpty[Element]]
-      val element = nonEmptySet.element
-      val otherElements = nonEmptySet.otherElements
-
-      element.hashCode + otherElements.hashCode
-    }
+    fold(41)(_ + _.hashCode())
 
   final def size: Int = {
     var result = 0
