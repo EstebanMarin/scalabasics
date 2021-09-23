@@ -53,15 +53,10 @@ sealed trait Set[Element] extends (Element => Boolean) {
   final override def hashCode: Int =
     fold(41)(_ + _.hashCode())
 
-  final def size: Int = {
-    var result = 0
-
-    foreach { _ =>
-      result = result + 1
+  final def size: Int =
+    fold(0) { (acc, _) =>
+      acc + 1
     }
-
-    result
-  }
 
   final def isEmpty: Boolean =
     this.isInstanceOf[Empty[Element]]
