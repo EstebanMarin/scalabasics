@@ -2,16 +2,21 @@ package com.estebanmarin.scalaplaygound.homegrown.collections
 
 sealed trait Set[Element] extends (Element => Boolean) {
   import Set._
-  final override def apply(input: Element): Boolean = {
-    var result = false
-
-    foreach { current =>
-      result = result || current == input
+  final override def apply(input: Element): Boolean =
+    fold(false) { (acc, element) =>
+      acc || element == input
     }
 
-    result
-  }
-  final def fold[R](seed: R)(function: (R, Element) => R): R = ???
+  @scala.annotation.tailrec
+  final def fold[R](seed: R)(function: (R, Element) => R): R =
+    if (isEmpty)
+      seed
+    else {
+      val nonEmptySet: NonEmpty[Element] = this.asInstanceOf[NonEmpty[Element]]
+      val element: Element = nonEmptySet.element
+      val otherElements: Set[Element] = nonEmptySet.otherElements
+      otherElements.fold[R](function(seed, element))(function)
+    }
 
   final def add(input: Element): Set[Element] = {
     var result = NonEmpty(input, empty)
