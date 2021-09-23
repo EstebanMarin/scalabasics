@@ -85,36 +85,17 @@ sealed trait Set[Element] extends (Element => Boolean) {
     }
 
   final def foreach[Result](function: Element => Result): Unit =
-    if (nonEmpty) {
-      val nonEmptySet = this.asInstanceOf[NonEmpty[Element]]
-      val element = nonEmptySet.element
-      val otherElements = nonEmptySet.otherElements
-
-      function(element)
-      otherElements.foreach(function)
+    fold(()) { (_, current) =>
+      function(current)
     }
 
-  final def map[Result](function: Element => Result): Set[Result] = {
-    var result = empty[Result]
+  final def map[Result](function: Element => Result): Set[Result] =
+    fold(empty[Result])(_ add function(_))
 
-    foreach { current =>
-      result = result.add(function(current))
+  final def flatMap[Result](function: Element => Set[Result]): Set[Result] =
+    fold(empty[Result]) { (acc, current) =>
+      function(current).fold(acc)(_ add _)
     }
-
-    result
-  }
-
-  final def flatMap[Result](function: Element => Set[Result]): Set[Result] = {
-    var result = empty[Result]
-
-    foreach { outerCurrent =>
-      function(outerCurrent).foreach { innerCurrent =>
-        result = result.add(innerCurrent)
-      }
-    }
-
-    result
-  }
 }
 
 object Set {
