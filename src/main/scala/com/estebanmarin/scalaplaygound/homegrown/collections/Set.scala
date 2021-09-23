@@ -26,15 +26,10 @@ sealed trait Set[Element] extends (Element => Boolean) {
       if (current == input) acc else NonEmpty(current, acc)
     }
 
-  final def union(that: Set[Element]): Set[Element] = {
-    var result = that
-
-    foreach { current =>
-      result = result.add(current)
+  final def union(that: Set[Element]): Set[Element] =
+    fold(that) { (acc, current) =>
+      acc.add(current)
     }
-
-    result
-  }
 
   final def intersection(that: Set[Element]): Set[Element] = {
     var result = empty[Element]
