@@ -27,9 +27,7 @@ sealed trait Set[Element] extends (Element => Boolean) {
     }
 
   final def union(that: Set[Element]): Set[Element] =
-    fold(that) { (acc, current) =>
-      acc.add(current)
-    }
+    fold(that)(_ add _)
 
   final def intersection(that: Set[Element]): Set[Element] = {
     var result = empty[Element]
