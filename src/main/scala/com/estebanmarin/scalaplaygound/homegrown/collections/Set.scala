@@ -2,7 +2,6 @@ package com.estebanmarin.scalaplaygound.homegrown.collections
 
 sealed trait Set[Element] extends (Element => Boolean) {
   import Set._
-
   final override def apply(input: Element): Boolean = {
     var result = false
 
@@ -12,6 +11,7 @@ sealed trait Set[Element] extends (Element => Boolean) {
 
     result
   }
+  final def fold[R](seed: R)(function: (R, Element) => R): R = ???
 
   final def add(input: Element): Set[Element] = {
     var result = NonEmpty(input, empty)
